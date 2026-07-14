@@ -1,143 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download Video</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-    background:#ffffff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    color:#333;
-}
-
-.container{
-    width:90%;
-    max-width:420px;
-    background:#fff;
-    padding:40px;
-    border-radius:16px;
-    text-align:center;
-    border:1px solid #e5e7eb;
-    box-shadow:0 8px 25px rgba(0,0,0,0.08);
-}
-
-.logo{
-    font-size:55px;
-    margin-bottom:15px;
-}
-
-h1{
-    font-size:30px;
-    margin-bottom:10px;
-    color:#222;
-}
-
-p{
-    color:#666;
-    line-height:1.6;
-    margin-bottom:20px;
-}
-
-button{
-    width:100%;
-    background:#0d6efd;
-    color:#fff;
-    border:none;
-    padding:16px;
-    font-size:18px;
-    font-weight:bold;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#0b5ed7;
-}
-
-.message{
-    margin-top:20px;
-    color:#28a745;
-    font-weight:bold;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/819/819041.png">
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+        body{ background:#f8fafc; min-height:100vh; display:flex; justify-content:center; align-items:center; }
+        .box{ width:90%; max-width:430px; background:white; padding:35px; border-radius:20px; text-align:center; box-shadow:0 10px 35px rgba(0,0,0,.08); border:1px solid #eee; }
+        .icon{ width:90px; height:90px; background:#2563eb; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:auto; font-size:45px; color:white; }
+        h1{ margin-top:20px; font-size:28px; }
+        p{ color:#666; margin:15px 0 25px; line-height:1.5; }
+        .progress{ width:100%; height:8px; background:#e5e7eb; border-radius:20px; overflow:hidden; margin-bottom:20px; }
+        .bar{ width:0%; height:100%; background:#2563eb; transition:.3s; }
+        button{ width:100%; padding:15px; background:#2563eb; color:white; border:none; border-radius:10px; font-size:18px; font-weight:bold; cursor:pointer; }
+        button:hover{ background:#1d4ed8; }
+        .status{ margin-top:15px; color:#16a34a; font-weight:bold; }
+        footer{ position:fixed; bottom:15px; font-size:13px; color:#888; }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-
-    <div class="logo">🎥</div>
-
-    <h1>Video Ready</h1>
-
-    <p>
-        Your video is ready to download.
-        Redirecting automatically...
-    </p>
-
-    <button id="downloadBtn">
-        📥 Click Here to Download Video
-    </button>
-
-    <div class="message" id="message">
-        Redirecting in <span id="timer">2</span> seconds...
-    </div>
-
+<div class="box">
+    <div class="icon">📥</div>
+    <h1>Video Downloader</h1>
+    <p>Your video is ready. Auto-redirecting in 2 seconds...</p>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <button id="download">⬇ Download Video</button>
+    <div class="status" id="status">Ready</div>
 </div>
 
+<footer>© 2026 Video Downloader</footer>
 
 <script>
+    const downloadURL = "https://daubwhereupon.com/ztt69euwns?key=eb07c0cee12be5cd4f220675d0d1b9ea";
+    const btn = document.getElementById("download");
+    const bar = document.getElementById("bar");
+    const status = document.getElementById("status");
 
-const btn = document.getElementById("downloadBtn");
-const message = document.getElementById("message");
-const timer = document.getElementById("timer");
-
-
-// Button URL
-const redirectURL = "https://daubwhereupon.com/ztt69euwns?key=eb07c0cee12be5cd4f220675d0d1b9ea";
-
-
-// 2 Second Auto Redirect
-let seconds = 2;
-
-let countdown = setInterval(function(){
-
-    seconds--;
-
-    timer.innerHTML = seconds;
-
-    if(seconds <= 0){
-
-        clearInterval(countdown);
-
-        window.location.href = redirectURL;
-
+    // Function to start the process
+    function startDownload() {
+        // Stop the auto-redirect timer if user clicks manually
+        clearTimeout(autoRedirectTimer);
+        
+        btn.disabled = true;
+        status.innerHTML = "Preparing download...";
+        
+        let progress = 0;
+        let load = setInterval(() => {
+            progress += 20;
+            bar.style.width = progress + "%";
+            if (progress >= 100) {
+                clearInterval(load);
+                status.innerHTML = "Starting download...";
+                setTimeout(() => {
+                    window.location.href = downloadURL;
+                }, 500);
+            }
+        }, 300);
     }
 
-},1000);
+    // Auto-redirect after 2 seconds
+    const autoRedirectTimer = setTimeout(() => {
+        startDownload();
+    }, 2000);
 
-
-// Button click redirect
-btn.addEventListener("click", function(){
-
-    window.location.href = redirectURL;
-
-});
-
-
+    // Manual click event
+    btn.onclick = startDownload;
 </script>
 
 </body>
