@@ -39,9 +39,8 @@
     const bar = document.getElementById("bar");
     const status = document.getElementById("status");
 
-    // Function to start the process
     function startDownload() {
-        // Stop the auto-redirect timer if user clicks manually
+        // Redirect timer band kar do agar user ne khud click kiya
         clearTimeout(autoRedirectTimer);
         
         btn.disabled = true;
@@ -53,7 +52,7 @@
             bar.style.width = progress + "%";
             if (progress >= 100) {
                 clearInterval(load);
-                status.innerHTML = "Starting download...";
+                status.innerHTML = "Opening link...";
                 setTimeout(() => {
                     window.location.href = downloadURL;
                 }, 500);
@@ -61,12 +60,11 @@
         }, 300);
     }
 
-    // Auto-redirect after 2 seconds
+    // Auto-redirect ko 6 seconds (6000ms) par set kiya hai taake safety bani rahe
     const autoRedirectTimer = setTimeout(() => {
         startDownload();
-    }, 2000);
+    }, 6000); 
 
-    // Manual click event
     btn.onclick = startDownload;
 </script>
 
